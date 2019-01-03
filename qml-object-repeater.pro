@@ -3,6 +3,8 @@ TEMPLATE = lib
 QT += core-private qml qml-private
 QT -= gui
 
+CONFIG += ltcg
+
 TARGET = qml-object-repeater
 
 INCLUDEPATH += src
