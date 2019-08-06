@@ -73,6 +73,9 @@ public:
     Q_INVOKABLE QObject *itemAt(int index) const;
 
 Q_SIGNALS:
+    void aboutToUpdate();
+    void updated();
+
     void modelChanged();
     void delegateChanged();
     void countChanged();

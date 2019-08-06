@@ -204,6 +204,8 @@ void QmlObjectRepeater::setModel(const QVariant &m)
     if (d->dataSource == model)
         return;
 
+    emit aboutToUpdate();
+
     clear();
     if (d->model) {
         qmlobject_disconnect(d->model, QQmlInstanceModel, SIGNAL(modelUpdated(QQmlChangeSet,bool)),
@@ -243,6 +245,7 @@ void QmlObjectRepeater::setModel(const QVariant &m)
                 this, QmlObjectRepeater, SLOT(initItem(int,QObject*)));
         regenerate();
     }
+    emit updated();
     emit modelChanged();
     emit countChanged();
 }
@@ -305,7 +308,9 @@ void QmlObjectRepeater::setDelegate(QQmlComponent *delegate)
 
     if (QQmlDelegateModel *dataModel = qobject_cast<QQmlDelegateModel*>(d->model)) {
         dataModel->setDelegate(delegate);
+        emit aboutToUpdate();
         regenerate();
+        emit updated();
         emit delegateChanged();
         d->delegateValidated = false;
     }
@@ -348,7 +353,9 @@ void QmlObjectRepeater::componentComplete()
     if (d->model && d->ownModel)
         static_cast<QQmlDelegateModel *>(d->model.data())->componentComplete();
     d->componentComplete = true;
+    emit aboutToUpdate();
     regenerate();
+    emit updated();
     if (d->model && d->model->count())
         emit countChanged();
 }
@@ -444,11 +451,15 @@ void QmlObjectRepeater::modelUpdated(const QQmlChangeSet &changeSet, bool reset)
         return;
 
     if (reset) {
+        emit aboutToUpdate();
         regenerate();
+        emit updated();
         if (changeSet.difference() != 0)
             emit countChanged();
         return;
     }
+
+    emit aboutToUpdate();
 
     int difference = 0;
     QHash<int, QVector<QPointer<QObject> > > moved;
@@ -487,6 +498,8 @@ void QmlObjectRepeater::modelUpdated(const QQmlChangeSet &changeSet, bool reset)
         }
         difference += insert.count;
     }
+
+    emit updated();
 
     if (difference != 0)
         emit countChanged();
