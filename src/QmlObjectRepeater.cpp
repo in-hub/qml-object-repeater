@@ -419,6 +419,12 @@ void QmlObjectRepeater::createdItem(int index, QObject *)
 void QmlObjectRepeater::initItem(int index, QObject *object)
 {
     Q_D(QmlObjectRepeater);
+    if (index >= d->deletables.size()) {
+        // this can happen when Package is used
+        // calling regenerate does too much work, all we need is to call resize
+        // so that d->deletables[index] = item below works
+        d->deletables.resize(d->model->count() + 1);
+    }
     QObject *item = qmlobject_cast<QObject*>(object);
 
     if (!d->deletables.at(index)) {
