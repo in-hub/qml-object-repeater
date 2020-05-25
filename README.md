@@ -10,7 +10,7 @@ The implementation is based on QQuickRepeater and is nearly identical.
 It only eliminates the QtQuick specifics and adds missing API parts
 originally inherited from QQuickItem.
 
-Copyright (c) 2018 in.hub GmbH
+Copyright (c) 2018-2020 in.hub GmbH
 
 Build and installation
 ----------------------
@@ -21,7 +21,7 @@ Build and installation
 Usage
 -----
 
-* Add qml_object_repeater to CONFIG in your Qt project
+* Add `qml_object_repeater` to the `CONFIG` variable in your Qt project
 * Include "QmlObjectRepeater.h" in your source file(s)
 * Register the QmlObjectRepeater or derived subclasses in the QML system
   via qmlRegisterType():
