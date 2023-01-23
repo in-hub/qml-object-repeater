@@ -18,12 +18,12 @@ add_library(qml-object-repeater SHARED
 
 if(WITH_QT6)
 	find_package(Qt6 COMPONENTS QmlModels REQUIRED)
-	target_link_libraries(qml-object-repeater Qt6::Core Qt6::CorePrivate Qt6::Qml Qt6::QmlPrivate Qt6::QmlModelsPrivate)
+	target_link_libraries(qml-object-repeater PRIVATE Qt6::Core Qt6::CorePrivate Qt6::Qml Qt6::QmlPrivate Qt6::QmlModelsPrivate)
 else()
-	target_link_libraries(qml-object-repeater Qt5::Core Qt5::CorePrivate Qt5::Qml Qt5::QmlPrivate)
+	target_link_libraries(qml-object-repeater PRIVATE Qt5::Core Qt5::CorePrivate Qt5::Qml Qt5::QmlPrivate)
 	if(${Qt5Qml_VERSION} VERSION_GREATER_EQUAL 5.15)
 		find_package(Qt5 COMPONENTS QmlModels REQUIRED)
-		target_link_libraries(qml-object-repeater Qt5::QmlModels)
+		target_link_libraries(qml-object-repeater PRIVATE Qt5::QmlModels)
 	endif()
 endif()
 
