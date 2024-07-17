@@ -370,7 +370,7 @@ void QmlObjectRepeater::clear()
                 d->model->release(item);
             }
         }
-        for (QObject *item : qAsConst(d->deletables)) {
+        for (QObject *item : std::as_const(d->deletables)) {
             if (item)
                 item->setParent(nullptr);
         }
