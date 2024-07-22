@@ -16,6 +16,8 @@ add_library(qml-object-repeater SHARED
 	${qor_PUBLIC_HEADERS}
 )
 
+set_target_properties(qml-object-repeater PROPERTIES CXX_STANDARD 20)
+
 if(WITH_QT6)
 	find_package(Qt6 COMPONENTS QmlModels REQUIRED)
 	target_link_libraries(qml-object-repeater PRIVATE Qt6::Core Qt6::CorePrivate Qt6::Qml Qt6::QmlPrivate Qt6::QmlModelsPrivate)
